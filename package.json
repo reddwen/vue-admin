@@ -11,7 +11,10 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "element-ui": "^2.3.8",
     "es6-promise": "^4.2.4",
+    "less": "^3.0.4",
+    "less-loader": "^4.1.0",
     "vue": "^2.5.2",
     "vue-resource": "^1.5.0",
     "vue-router": "^3.0.1"

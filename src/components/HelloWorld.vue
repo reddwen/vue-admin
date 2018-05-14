@@ -4,7 +4,7 @@
     <form>
       <input type="text" name="username" v-model="userName"> <br>
       <input type="text" name="password" v-model="password"> <br>
-      <a href="javascript:;" @click="addUser">提交</a>
+      <el-button @click="addUser">提交</el-button>
     </form>
   </div>
 </template>
