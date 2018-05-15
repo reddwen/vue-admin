@@ -5,7 +5,7 @@
       <p class="note" v-if="errorMsg">{{errorMsg}}</p>
       <el-form :model="form" :rules="rules" ref="form" class="login-form">
         <el-form-item prop="phone">
-          <el-input v-model="form.phone" maxlength="11" placeholder="手机号码" auto-complete="off"></el-input>
+          <el-input v-model="form.phone" maxlength="11" placeholder="手机号" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item prop="password">
           <el-input v-model="form.password" type="password" placeholder="密码" auto-complete="off"></el-input>
@@ -24,9 +24,11 @@
 
 <script>
   import qs from 'qs'
+  import * as utils from '../utils/utils'
+
   export default {
     data() {
-      var checkPhone = (rule, value, callback) => {
+      var checkphone = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入手机号'));
         } else if (!utils.isvalidPhone(value)) {
@@ -52,7 +54,7 @@
         },
         rules: {
           phone: [{
-            validator: checkPhone,
+            validator: checkphone,
             trigger: 'blur'
           }],
           password: [{
@@ -74,10 +76,12 @@
               "phone": this.form.phone,
               "password": this.form.password
             };
-            this.$http.post('/api/sso/kgjCompanyAccount/login', form).then((res) => {
-              
-            }).then(() => {
-          
+            this.$http.post('/api/user/login', form).then((res) => {
+              if(res.code){
+                utils.setLocalStorage('userInfo',qs.stringify(res.data));
+              }else{
+                this.$message.error(res.msg);
+              }
             }).catch(err => {
               this.errorMsg = err;
             });
